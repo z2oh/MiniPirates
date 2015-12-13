@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,17 +14,23 @@ namespace MiniPirates.Engine.Objects.Components
 
         Transform objectTransform;
 
-        public new void Initialize()
+
+
+        public override void Initialize()
         {
-            objectTransform = 
-            
+            if (null != this.gameObject.GetComponent<Transform>())
+            {
+                objectTransform = this.gameObject.GetComponent<Transform>();
+            }
             base.Initialize();
         }
 
-        public new void Draw(SpriteBatch spriteBatch)
+
+
+        public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-            
+            //spriteBatch.Draw(sprite,  objectTransform.TopLeft, null , Color.White, objectTransform.Rotation, objectTransform.Origin, objectTransform.Scale, SpriteEffects.None, objectTransform.Layer);
             spriteBatch.End();
 
             base.Draw(spriteBatch);

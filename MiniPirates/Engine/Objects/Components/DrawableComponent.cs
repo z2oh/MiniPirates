@@ -8,9 +8,9 @@ namespace MiniPirates.Engine.Objects.Components
 {
     public class DrawableComponent : Component
     {
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
-
+            
         }
     }
 }

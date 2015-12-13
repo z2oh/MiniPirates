@@ -8,14 +8,19 @@ namespace MiniPirates.Engine.Objects.Components
 {
     public class Component
     {
-        GameObject gameObject;
+        internal GameObject gameObject;
 
-        public void Initialize()
+        public Component()
+        {
+            Initialize();
+        }
+
+        public virtual void Initialize()
         {
 
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
 
         }

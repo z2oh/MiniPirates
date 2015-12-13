@@ -34,25 +34,34 @@ namespace MiniPirates.Engine.Objects
         {
             foreach(Component c in components)
             {
-                if(c.GetType() == typeof(DrawableComponent))
+                if(typeof(DrawableComponent).IsAssignableFrom(c.GetType()))
                 {
                     (c as DrawableComponent).Draw(spriteBatch);
+                    
                 }
             }
         }
 
+        public void AddNewComponent<T>()
+        {
+            Component c = new T();
+        }
+
         public void AddComponent(Component c)
         {
+            c.gameObject = this;
             components.Add(c);
         }
 
         public T GetComponent<T>()
         {
+            if (!typeof(T).IsAssignableFrom(typeof(Component)))
+                return default(T);
             foreach(Component c in components)
             {
-                if(c.GetType() == T.GetType())
+                if(c.GetType() == typeof(T))
                 {
-                    return c;
+                    return (T) Convert.ChangeType(c, typeof(T));
                 }
             }
             return default(T);
