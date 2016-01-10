@@ -38,8 +38,12 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Engine\Input.cs" />
     <Compile Include="Engine\Objects\Components\DrawableComponent.cs" />
     <Compile Include="Engine\Objects\Components\Component.cs" />
+    <Compile Include="Engine\Objects\Components\PhysicsBody.cs" />
+    <Compile Include="Gameplay\Scripts\FollowPlayer.cs" />
+    <Compile Include="Gameplay\Scripts\Player.cs" />
     <Compile Include="Engine\Objects\Components\SpriteRenderer.cs" />
     <Compile Include="Engine\Objects\Components\Transform.cs" />
     <Compile Include="Engine\Objects\GameObject.cs" />

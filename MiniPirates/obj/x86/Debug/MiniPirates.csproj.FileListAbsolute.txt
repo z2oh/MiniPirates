@@ -23,3 +23,10 @@ C:\Users\Jeremy\Documents\Programming\MiniPirates\MiniPirates\bin\Windows\Debug\
 C:\Users\Jeremy\Documents\Programming\MiniPirates\MiniPirates\obj\x86\Debug\MiniPirates.csprojResolveAssemblyReference.cache
 C:\Users\Jeremy\Documents\Programming\MiniPirates\MiniPirates\obj\x86\Debug\MiniPirates.exe
 C:\Users\Jeremy\Documents\Programming\MiniPirates\MiniPirates\obj\x86\Debug\MiniPirates.pdb
+C:\Users\Jeremy\Documents\Programming\MiniPirates\MiniPirates\bin\Windows\Debug\Content\player.xnb
+C:\Users\Jeremy\Documents\Programming\MiniPirates\MiniPirates\bin\Windows\Debug\Content\boulder.xnb
+C:\Users\Jeremy\Documents\Programming\MiniPirates\MiniPirates\bin\Windows\Debug\Content\ship_back.xnb
+C:\Users\Jeremy\Documents\Programming\MiniPirates\MiniPirates\bin\Windows\Debug\Content\ship_front.xnb
+C:\Users\Jeremy\Documents\Programming\MiniPirates\MiniPirates\bin\Windows\Debug\Content\ship_left.xnb
+C:\Users\Jeremy\Documents\Programming\MiniPirates\MiniPirates\bin\Windows\Debug\Content\ship_right.xnb
+C:\Users\Jeremy\Documents\Programming\MiniPirates\MiniPirates\bin\Windows\Debug\Content\cannonBall.xnb

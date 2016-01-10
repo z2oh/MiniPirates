@@ -1,8 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MiniPirates.Engine;
 using MiniPirates.Engine.Objects;
 using MiniPirates.Engine.Objects.Components;
+using MiniPirates.Gameplay.Scripts;
+using System.Collections.Generic;
 
 namespace MiniPirates
 {
@@ -14,12 +17,24 @@ namespace MiniPirates
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        GameObject go;
+        GameObject playerObject;
+        public static GameObject camera;
+        GameObject boulderObject;
+
+        Texture2D shipHull;
+        Texture2D boulder;
+        public static Texture2D cannonBall;
+
+        public static List<GameObject> cannonballs;
+
+        public static Vector2 centerOfScreen;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            this.IsMouseVisible = true;
+            
         }
 
         /// <summary>
@@ -30,13 +45,43 @@ namespace MiniPirates
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            cannonballs = new List<GameObject>();
+            Input.Initialize();
 
-            go = new GameObject();
-            go.AddComponent(new Transform());
-            go.AddComponent(new SpriteRenderer());
+            playerObject = new GameObject();
+            camera = new GameObject();
+            boulderObject = new GameObject();
 
             base.Initialize();
+
+            Transform tb = boulderObject.AddNewComponent<Transform>();
+            tb.InitializeValues(boulder);
+            SpriteRenderer r1 = boulderObject.AddNewComponent<SpriteRenderer>();
+            r1.Sprite = boulder;
+            tb.Position = new Vector2(250, 250);
+            //PhysicsBody b4 = boulderObject.AddNewComponent<PhysicsBody>();
+           
+            Transform t = playerObject.AddNewComponent<Transform>();
+            t.InitializeValues(shipHull);
+            SpriteRenderer r = playerObject.AddNewComponent<SpriteRenderer>();
+            r.Sprite = shipHull;
+            
+            PhysicsBody b = playerObject.AddNewComponent<PhysicsBody>();
+
+            Player player = playerObject.AddNewComponent<Player>();
+
+            Transform ct = camera.AddNewComponent<Transform>();
+            FollowPlayer fp = camera.AddNewComponent<FollowPlayer>();
+            fp.InitializeValues(playerObject);
+
+            r.InitializeValues(camera);
+            r1.InitializeValues(camera);
+
+            //graphics.PreferredBackBufferWidth = 1920;
+            //graphics.PreferredBackBufferHeight = 1080;
+            //graphics.ToggleFullScreen();
+            //graphics.ApplyChanges();
+            centerOfScreen = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 2);
         }
 
         /// <summary>
@@ -47,7 +92,9 @@ namespace MiniPirates
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            shipHull = Content.Load<Texture2D>("player");
+            boulder = Content.Load<Texture2D>("boulder");
+            cannonBall = Content.Load<Texture2D>("cannonBall");
             // TODO: use this.Content to load your game content here
         }
 
@@ -67,11 +114,14 @@ namespace MiniPirates
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            // TODO: Add your update logic here
-
+            Input.Update();
+            playerObject.Update(gameTime);
+            camera.Update(gameTime);
+            boulderObject.Update(gameTime);
+            foreach (GameObject g in cannonballs)
+            {
+                g.Update(gameTime);
+            }
             base.Update(gameTime);
         }
 
@@ -82,7 +132,12 @@ namespace MiniPirates
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            go.Draw(spriteBatch);
+            playerObject.Draw(spriteBatch);
+            boulderObject.Draw(spriteBatch);
+            foreach(GameObject g in cannonballs)
+            {
+                g.Draw(spriteBatch);
+            }
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);

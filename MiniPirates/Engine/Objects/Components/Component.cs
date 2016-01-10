@@ -12,7 +12,7 @@ namespace MiniPirates.Engine.Objects.Components
 
         public Component()
         {
-            Initialize();
+
         }
 
         public virtual void Initialize()

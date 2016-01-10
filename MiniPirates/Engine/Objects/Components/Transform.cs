@@ -9,6 +9,20 @@ namespace MiniPirates.Engine.Objects.Components
 {
     public class Transform : Component
     {
+        Vector2 forward;
+        public Vector2 Forward
+        {
+            get
+            {
+                return forward;
+            }
+
+            set
+            {
+                forward = value;
+            }
+        }
+
         Vector2 position;
         public Vector2 Position
         {
@@ -48,20 +62,6 @@ namespace MiniPirates.Engine.Objects.Components
             set
             {
                 rectangle = value;
-            }
-        }
-
-        Vector2 topLeft;
-        public Vector2 TopLeft
-        {
-            get
-            {
-                return topLeft;
-            }
-
-            set
-            {
-                topLeft = value;
             }
         }
 
@@ -106,18 +106,61 @@ namespace MiniPirates.Engine.Objects.Components
                 layer = value;
             }
         }
-        
+
         public Transform()
         {
 
         }
 
-        public Transform(Texture2D sprite)
+        public void InitializeValues(Texture2D sprite)
         {
             position = Vector2.Zero;
             rotation = 0f;
             rectangle = new Vector4(position.X - (sprite.Width / 2f), position.Y - (sprite.Height / 2f), sprite.Width, sprite.Height);
-            topLeft = new Vector2(rectangle.X, rectangle.Y);
+            origin = new Vector2(sprite.Width / 2, sprite.Height / 2);
+            scale = Vector2.One;
+            forward = new Vector2(0, 1);
+        }
+
+        public void Move(Vector2 vector)
+        {
+            position += vector;
+        }
+
+        public void MoveForward(float distance)
+        {
+            position += (forward * distance);
+        }
+
+        public void Rotate(float angle)
+        {
+            rotation += angle;
+            rotation %= 2f * (float)Math.PI;
+
+            float sin = (float)Math.Sin(angle);
+            float cos = (float)Math.Cos(angle);
+
+            float x = forward.X;
+            float y = forward.Y;
+
+            forward.X = x * cos - y * sin;
+            forward.Y = x * sin + y * cos;
+        }
+
+        public void SetRotation(float angle)
+        {
+            rotation = angle;
+            rotation %= 2f * (float)Math.PI;
+
+            float sin = (float)Math.Sin(rotation);
+            float cos = (float)Math.Cos(rotation);
+
+            float x = 0;
+            float y = 1;
+
+            forward.X = x * cos - y * sin;
+            forward.Y = x * sin + y * cos;
+            forward.Normalize();
         }
     }
 }
