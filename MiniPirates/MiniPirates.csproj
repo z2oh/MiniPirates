@@ -42,6 +42,7 @@
     <Compile Include="Engine\Objects\Components\DrawableComponent.cs" />
     <Compile Include="Engine\Objects\Components\Component.cs" />
     <Compile Include="Engine\Objects\Components\PhysicsBody.cs" />
+    <Compile Include="Gameplay\Objects\Ship.cs" />
     <Compile Include="Gameplay\Scripts\FollowPlayer.cs" />
     <Compile Include="Gameplay\Scripts\Player.cs" />
     <Compile Include="Engine\Objects\Components\SpriteRenderer.cs" />

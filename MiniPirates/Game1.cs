@@ -23,6 +23,8 @@ namespace MiniPirates
 
         Texture2D shipHull;
         Texture2D boulder;
+        Texture2D cannonOutline;
+        Texture2D cannonFilled;
         public static Texture2D cannonBall;
 
         public static List<GameObject> cannonballs;
@@ -95,6 +97,8 @@ namespace MiniPirates
             shipHull = Content.Load<Texture2D>("player");
             boulder = Content.Load<Texture2D>("boulder");
             cannonBall = Content.Load<Texture2D>("cannonBall");
+            cannonOutline = Content.Load<Texture2D>("cannonOutline");
+            cannonFilled = Content.Load<Texture2D>("cannonFilled");
             // TODO: use this.Content to load your game content here
         }
 
@@ -125,6 +129,10 @@ namespace MiniPirates
             base.Update(gameTime);
         }
 
+        static Vector2 outlineLocation = new Vector2(0, -12);
+        static Color slightlyTransparent = new Color(255, 255, 255, 180);
+        
+
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
@@ -139,6 +147,12 @@ namespace MiniPirates
                 g.Draw(spriteBatch);
             }
             // TODO: Add your drawing code here
+
+            spriteBatch.Begin();
+            spriteBatch.Draw(cannonOutline, outlineLocation, slightlyTransparent);
+            int val = (int)(cannonFilled.Width * MathHelper.Min(playerObject.GetComponent<Player>().timeSinceLastShot, 1.0f));
+            spriteBatch.Draw(cannonFilled, outlineLocation, new Rectangle(0, 0, (int)(cannonFilled.Width * (MathHelper.Min(playerObject.GetComponent<Player>().timeSinceLastShot, 1000f) / 1000f)), cannonFilled.Height), slightlyTransparent);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
