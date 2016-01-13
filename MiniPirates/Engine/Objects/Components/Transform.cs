@@ -23,6 +23,20 @@ namespace MiniPirates.Engine.Objects.Components
             }
         }
 
+        Vector2 right;
+        public Vector2 Right
+        {
+            get
+            {
+                return right;
+            }
+
+            set
+            {
+                right = value;
+            }
+        }
+
         Vector2 position;
         public Vector2 Position
         {
@@ -107,6 +121,8 @@ namespace MiniPirates.Engine.Objects.Components
             }
         }
 
+
+
         public Transform()
         {
 
@@ -145,22 +161,18 @@ namespace MiniPirates.Engine.Objects.Components
 
             forward.X = x * cos - y * sin;
             forward.Y = x * sin + y * cos;
+            forward.Normalize();
+
+            var temp = Vector3.Cross(Vector3.UnitZ, new Vector3(forward, 0));
+            right.X = temp.X;
+            right.Y = temp.Y;
+            right.Normalize();
         }
 
         public void SetRotation(float angle)
         {
-            rotation = angle;
-            rotation %= 2f * (float)Math.PI;
-
-            float sin = (float)Math.Sin(rotation);
-            float cos = (float)Math.Cos(rotation);
-
-            float x = 0;
-            float y = 1;
-
-            forward.X = x * cos - y * sin;
-            forward.Y = x * sin + y * cos;
-            forward.Normalize();
+            rotation = 0;
+            Rotate(angle);
         }
     }
 }

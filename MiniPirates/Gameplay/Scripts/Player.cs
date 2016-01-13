@@ -7,6 +7,8 @@ using MiniPirates.Engine.Objects.Components;
 using MiniPirates.Engine;
 using Microsoft.Xna.Framework.Input;
 using MiniPirates.Engine.Objects;
+using MiniPirates.Gameplay.Objects;
+using static MiniPirates.Engine.Enum;
 
 namespace MiniPirates.Gameplay.Scripts
 {
@@ -37,7 +39,14 @@ namespace MiniPirates.Gameplay.Scripts
             float elapsedTime = gameTime.ElapsedGameTime.Milliseconds / 1000f;
             if(Input.KeyDown(Keys.W))
             {
-                body.Accelerate(elapsedTime * 40);
+                body.Accelerate(elapsedTime * 80);
+            }
+            if(Input.KeyDown(Keys.S))
+            {
+                if(body.Speed > 0)
+                {
+                    body.Accelerate(elapsedTime * -40);
+                }
             }
             if(Input.KeyDown(Keys.A))
             {
@@ -50,12 +59,12 @@ namespace MiniPirates.Gameplay.Scripts
             if(Input.KeyDown(Keys.Q) && timeSinceLastShot >= 1000f)
             {
                 timeSinceLastShot = 0.0f;
-                ShootLeft(gameTime);
+                gameObject.World.AddGameObject(Cannonball.GenerateCannonball(gameObject, RelevantDirection.Right));
             }
             else if(Input.KeyDown(Keys.E) && timeSinceLastShot >= 1000f)
             {
                 timeSinceLastShot = 0.0f;
-                ShootRight(gameTime);
+                gameObject.World.AddGameObject(Cannonball.GenerateCannonball(gameObject, RelevantDirection.Left));
             }
             else
             {

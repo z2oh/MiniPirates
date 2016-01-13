@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MiniPirates.Engine.Objects.Components;
+using MiniPirates.Engine.WorldSpace;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,18 +12,34 @@ namespace MiniPirates.Engine.Objects
     public class GameObject
     {
         List<Component> components;
+        World world;
+
+        public bool IsDead = false;
+
+        public World World
+        {
+            get
+            {
+                return world;
+            }
+
+            set
+            {
+                world = value;
+            }
+        }
 
         public GameObject()
         {
             Initialize();
         }
 
-        public void Initialize()
+        public virtual void Initialize()
         {
             components = new List<Component>();
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             foreach(Component c in components)
             {
@@ -30,7 +47,7 @@ namespace MiniPirates.Engine.Objects
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
             foreach(Component c in components)
             {
@@ -67,6 +84,27 @@ namespace MiniPirates.Engine.Objects
                 }
             }
             return default(T);
+        }
+
+        public T GetComponent<T>(int number) where T : Component
+        {
+            int found = 0;
+            foreach (Component c in components)
+            {
+                if (c.GetType() == typeof(T))
+                {
+                    if(found == number)
+                        //return (T) Convert.ChangeType(c, typeof(T));
+                        return c as T;
+                    found++;
+                }
+            }
+            return default(T);
+        }
+
+        public void Destroy()
+        {
+            world.RemoveGameObject(this);
         }
     }
 }

@@ -38,10 +38,16 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Engine\Enum.cs" />
+    <Compile Include="Engine\GUI\GUIObject.cs" />
+    <Compile Include="Engine\GUI\GUIRenderer.cs" />
+    <Compile Include="Engine\GUI\LoadingBar.cs" />
     <Compile Include="Engine\Input.cs" />
     <Compile Include="Engine\Objects\Components\DrawableComponent.cs" />
     <Compile Include="Engine\Objects\Components\Component.cs" />
     <Compile Include="Engine\Objects\Components\PhysicsBody.cs" />
+    <Compile Include="Engine\WorldSpace\World.cs" />
+    <Compile Include="Gameplay\Objects\Cannonball.cs" />
     <Compile Include="Gameplay\Objects\Ship.cs" />
     <Compile Include="Gameplay\Scripts\FollowPlayer.cs" />
     <Compile Include="Gameplay\Scripts\Player.cs" />
