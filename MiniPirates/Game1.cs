@@ -140,7 +140,8 @@ namespace MiniPirates
 
         static Vector2 outlineLocation = new Vector2(0, -12);
         static Color slightlyTransparent = new Color(255, 255, 255, 180);
-        
+
+        static Color ocean = new Color(44, 107, 215);
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -148,7 +149,7 @@ namespace MiniPirates
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(ocean);
             world.Draw(spriteBatch);
             foreach(GameObject g in cannonballs)
             {

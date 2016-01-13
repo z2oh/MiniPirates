@@ -50,11 +50,11 @@ namespace MiniPirates.Gameplay.Scripts
             }
             if(Input.KeyDown(Keys.A))
             {
-                body.Rotate((float)Math.PI * .00005f * body.Speed);
+                body.Rotate((float)Math.PI * -.00005f * body.Speed);
             }
             if(Input.KeyDown(Keys.D))
             {
-                body.Rotate((float)Math.PI * -.00005f * body.Speed);
+                body.Rotate((float)Math.PI * .00005f * body.Speed);
             }
             if(Input.KeyDown(Keys.Q) && timeSinceLastShot >= 1000f)
             {
@@ -79,51 +79,5 @@ namespace MiniPirates.Gameplay.Scripts
         }
 
         public float timeSinceLastShot = 1.0f;
-
-        public void ShootLeft(GameTime gameTime)
-        {
-            Vector3 z = Vector3.UnitZ;
-            Vector3 forward = new Vector3(objectTransform.Forward, 0);
-            Vector3 result = Vector3.Cross(forward, z);
-            Vector2 resultantDirection = new Vector2(result.X, result.Y);
-            resultantDirection.Normalize();
-
-            GameObject cannonBall = new GameObject();
-            Transform t = cannonBall.AddNewComponent<Transform>();
-            
-            SpriteRenderer r = cannonBall.AddNewComponent<SpriteRenderer>();
-            r.Sprite = Game1.cannonBall;
-            t.InitializeValues(Game1.cannonBall);
-            t.Position = objectTransform.Position;
-            t.Forward = resultantDirection;
-            PhysicsBody b = cannonBall.AddNewComponent<PhysicsBody>();
-            b.Accelerate(2000);
-            b.AddVelocity(body.Velocity);
-            r.InitializeValues(Game1.camera);
-            Game1.cannonballs.Add(cannonBall);
-        }
-
-        public void ShootRight(GameTime gameTime)
-        {
-            Vector3 z = -Vector3.UnitZ;
-            Vector3 forward = new Vector3(objectTransform.Forward, 0);
-            Vector3 result = Vector3.Cross(forward, z);
-            Vector2 resultantDirection = new Vector2(result.X, result.Y);
-            resultantDirection.Normalize();
-
-            GameObject cannonBall = new GameObject();
-            Transform t = cannonBall.AddNewComponent<Transform>();
-
-            SpriteRenderer r = cannonBall.AddNewComponent<SpriteRenderer>();
-            r.Sprite = Game1.cannonBall;
-            t.InitializeValues(Game1.cannonBall);
-            t.Position = objectTransform.Position;
-            t.Forward = resultantDirection;
-            PhysicsBody b = cannonBall.AddNewComponent<PhysicsBody>();
-            b.Accelerate(2000);
-            b.AddVelocity(body.Velocity);
-            r.InitializeValues(Game1.camera);
-            Game1.cannonballs.Add(cannonBall);
-        }
     }
 }
