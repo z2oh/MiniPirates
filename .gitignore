@@ -22,6 +22,10 @@ MiniPirates/bld/
 MiniPirates/[Bb]in/
 MiniPirates/[Oo]bj/
 
+# Monogame content project build results
+MiniPirates/Content/[Bb]in/
+MiniPirates/Content/[Oo]bj/
+
 # Visual Studo 2015 cache/options directory
 .vs/
 
