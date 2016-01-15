@@ -59,12 +59,12 @@ namespace MiniPirates.Gameplay.Scripts
             if(Input.KeyDown(Keys.Q) && timeSinceLastShot >= 1000f)
             {
                 timeSinceLastShot = 0.0f;
-                gameObject.World.AddGameObject(Cannonball.GenerateCannonball(gameObject, RelevantDirection.Right));
+                gameObject.World.AddGameObject(Cannonball.GenerateCannonball(gameObject, RelevantDirection.Left));
             }
             else if(Input.KeyDown(Keys.E) && timeSinceLastShot >= 1000f)
             {
                 timeSinceLastShot = 0.0f;
-                gameObject.World.AddGameObject(Cannonball.GenerateCannonball(gameObject, RelevantDirection.Left));
+                gameObject.World.AddGameObject(Cannonball.GenerateCannonball(gameObject, RelevantDirection.Right));
             }
             else
             {

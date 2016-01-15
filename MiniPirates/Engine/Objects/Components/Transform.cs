@@ -136,6 +136,7 @@ namespace MiniPirates.Engine.Objects.Components
             origin = new Vector2(sprite.Width / 2, sprite.Height / 2);
             scale = Vector2.One;
             forward = new Vector2(0, 1);
+            right = new Vector2(-1, 0);
         }
 
         public void Move(Vector2 vector)
