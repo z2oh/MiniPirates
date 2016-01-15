@@ -11,16 +11,16 @@
 *.userprefs
 
 # Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
-x64/
-x86/
-build/
-bld/
-[Bb]in/
-[Oo]bj/
+MiniPirates/[Dd]ebug/
+MiniPirates/[Dd]ebugPublic/
+MiniPirates/[Rr]elease/
+MiniPirates/[Rr]eleases/
+MiniPirates/x64/
+MiniPirates/x86/
+MiniPirates/build/
+MiniPirates/bld/
+MiniPirates/[Bb]in/
+MiniPirates/[Oo]bj/
 
 # Visual Studo 2015 cache/options directory
 .vs/
