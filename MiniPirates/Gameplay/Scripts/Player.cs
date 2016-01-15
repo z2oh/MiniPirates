@@ -70,14 +70,10 @@ namespace MiniPirates.Gameplay.Scripts
             {
                 timeSinceLastShot += gameTime.ElapsedGameTime.Milliseconds;
             }
-            if(Input.KeyDown(Keys.Q))
-            {
-
-            }
             
             base.Update(gameTime);
         }
 
-        public float timeSinceLastShot = 1.0f;
+        public float timeSinceLastShot = 1000f;
     }
 }
