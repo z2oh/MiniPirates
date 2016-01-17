@@ -8,6 +8,7 @@ using System.Text;
 using MiniPirates.Engine.Utility;
 using Microsoft.Xna.Framework;
 using static MiniPirates.Engine.Utility.Enum;
+using MiniPirates.Gameplay.Screens;
 
 namespace MiniPirates.Gameplay.Objects
 {
@@ -27,7 +28,7 @@ namespace MiniPirates.Gameplay.Objects
             transform.InitializeValues(cannonballSprite);
             spriteRenderer = AddNewComponent<SpriteRenderer>();
             spriteRenderer.Sprite = cannonballSprite;
-            spriteRenderer.InitializeValues(Game1.camera);
+            spriteRenderer.InitializeValues(GameScreen.camera);
             physicsBody = AddNewComponent<PhysicsBody>();
         }
 
