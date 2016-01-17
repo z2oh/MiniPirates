@@ -49,6 +49,8 @@ namespace MiniPirates.Engine.Objects.Components
             set
             {
                 position = value;
+                rectangle.X = position.X - rectangle.Z * 0.5f;
+                rectangle.Y = position.Y - rectangle.W * 0.5f;
             }
         }
 
