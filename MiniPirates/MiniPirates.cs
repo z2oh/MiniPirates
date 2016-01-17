@@ -46,7 +46,9 @@ namespace MiniPirates
             rand = new Random();
             screenManager = new ScreenManager(this);
 
-            GameScreen main = new GameScreen(screenManager);
+
+            MainMenuScreen main = new MainMenuScreen(screenManager);
+            //GameScreen main = new GameScreen(screenManager);
             
 
             Input.Initialize();

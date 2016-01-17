@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MiniPirates.Engine.WorldSpace;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace MiniPirates.Engine.ScreenManagement
 {
     public abstract class Screen
     {
+        internal World world;
+
         ScreenManager screenManager;
         public ScreenManager ScreenManager
         {
@@ -68,17 +71,17 @@ namespace MiniPirates.Engine.ScreenManagement
 
         public virtual void Initialize()
         {
-
+            world = new World();
         }
 
         public virtual void Update(GameTime gameTime)
         {
-
+            world.Update(gameTime);
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-
+            world.Draw(spriteBatch);
         }
     }
 }

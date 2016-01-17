@@ -10,17 +10,28 @@ namespace MiniPirates.Engine.ScreenManagement
     public class ScreenManager
     {
         Stack<Screen> screens;
+        Queue<Screen> newScreens;
+        
         internal MiniPirates gameReference;
 
         public ScreenManager(MiniPirates gameReference)
         {
             screens = new Stack<Screen>();
+            newScreens = new Queue<Screen>();
             this.gameReference = gameReference;
         }
 
         public void Update(GameTime gameTime)
         {
-            screens.Peek().Update(gameTime);
+            foreach (Screen screen in screens)
+            {
+                if (screen.Enabled)
+                    screen.Update(gameTime);
+            }
+            while(newScreens.Count > 0)
+            {
+                screens.Push(newScreens.Dequeue());
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -32,16 +43,16 @@ namespace MiniPirates.Engine.ScreenManagement
             }
         }
 
+        public void PopScreen(Screen screen)
+        {
+
+        }
+
         public void PushScreen(Screen screen)
         {
-            if (screens.Count > 0)
-            {
-                screens.Peek().Enabled = false;
-                screens.Peek().Visible = false;
-            }
             screen.Visible = true;
             screen.Enabled = true;
-            screens.Push(screen);
+            newScreens.Enqueue(screen);
         }
     }
 }

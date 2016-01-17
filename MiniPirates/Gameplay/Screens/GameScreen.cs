@@ -15,8 +15,6 @@ namespace MiniPirates.Gameplay.Screens
 {
     public class GameScreen : Screen
     {
-        World world;
-
         Texture2D shipHull;
         Texture2D boulder;
         Texture2D cannonOutline;
@@ -32,7 +30,7 @@ namespace MiniPirates.Gameplay.Screens
 
         public override void Initialize()
         {
-            world = new World();
+            base.Initialize();
 
             GameObject playerObject = new GameObject();
             GameObject boulderObject = new GameObject();
@@ -65,8 +63,6 @@ namespace MiniPirates.Gameplay.Screens
             world.AddGameObject(boulderObject);
 
             playerReference = playerObject;
-
-            base.Initialize();
             //centerOfScreen = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 2);
         }
 
@@ -83,7 +79,6 @@ namespace MiniPirates.Gameplay.Screens
 
         public override void Update(GameTime gameTime)
         {
-            world.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -93,14 +88,12 @@ namespace MiniPirates.Gameplay.Screens
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            world.Draw(spriteBatch);
+            base.Draw(spriteBatch);
 
             spriteBatch.Begin();
             spriteBatch.Draw(cannonOutline, outlineLocation, Color.White);
             spriteBatch.Draw(cannonFilled, outlineLocation, new Rectangle(0, 0, (int)(cannonFilled.Width * (MathHelper.Min(playerReference.GetComponent<Player>().timeSinceLastShot, 1000f) / 1000f)), cannonFilled.Height), Color.White);
-            spriteBatch.End();
-
-            base.Draw(spriteBatch);
+            spriteBatch.End(); 
         }
     }
 }

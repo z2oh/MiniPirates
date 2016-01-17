@@ -9,11 +9,13 @@ namespace MiniPirates.Engine.GUI
 {
     public class GUIObject : GameObject
     {
+        Transform transform;
         GUIRenderer guiRenderer;
 
         public override void Initialize()
         {
             base.Initialize();
+            transform = AddNewComponent<Transform>();
             guiRenderer = AddNewComponent<GUIRenderer>();
         }
     }

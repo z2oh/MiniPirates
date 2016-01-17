@@ -23,14 +23,12 @@ namespace MiniPirates.Engine.Objects.Components
             }
         }
 
-        bool isAtlas;
-
         Transform objectTransform;
         Transform cameraTransform;
 
         public override void Initialize()
         {
-            Transform t = this.gameObject.GetComponent<Transform>();
+            Transform t = gameObject.GetComponent<Transform>();
             if (null != t)
             {
                 objectTransform = t;

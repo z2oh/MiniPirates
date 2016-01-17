@@ -53,12 +53,13 @@
     <Compile Include="Gameplay\Objects\Cannonball.cs" />
     <Compile Include="Gameplay\Objects\Ship.cs" />
     <Compile Include="Gameplay\Screens\GameScreen.cs" />
+    <Compile Include="Gameplay\Screens\MainMenuScreen.cs" />
     <Compile Include="Gameplay\Scripts\FollowPlayer.cs" />
     <Compile Include="Gameplay\Scripts\Player.cs" />
     <Compile Include="Engine\Objects\Components\SpriteRenderer.cs" />
     <Compile Include="Engine\Objects\Components\Transform.cs" />
     <Compile Include="Engine\Objects\GameObject.cs" />
-    <Compile Include="Game1.cs" />
+    <Compile Include="MiniPirates.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
