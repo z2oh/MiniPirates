@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,16 @@ namespace MiniPirates.Engine
         public static bool KeyDown(Keys key)
         {
             return currentKeyboardState.IsKeyDown(key);
+        }
+
+        public static Vector2 GetMousePosition()
+        {
+            return currentMouseState.Position.ToVector2();
+        }
+
+        public static bool WasLMBPressed()
+        {
+            return currentMouseState.LeftButton == ButtonState.Released && prevMouseState.LeftButton == ButtonState.Pressed;
         }
     }
 }
