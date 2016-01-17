@@ -24,7 +24,7 @@ namespace MiniPirates.Gameplay.Scripts
         public override void Update(GameTime gameTime)
         {
             cameraTransform.Position = playerTransform.Position;
-            cameraTransform.Position -= Game1.centerOfScreen;
+            cameraTransform.Position -= MiniPirates.centerOfScreen;
             base.Update(gameTime);
         }
     }

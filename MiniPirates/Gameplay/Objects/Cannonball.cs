@@ -77,10 +77,10 @@ namespace MiniPirates.Gameplay.Objects
 
             
 
-            float lengthDisplacement = (float)(Game1.rand.NextDouble() * shipLength) - (shipLength * .5f);
+            float lengthDisplacement = (float)(MiniPirates.rand.NextDouble() * shipLength) - (shipLength * .5f);
             cannonball.transform.Position += shipTransform.Forward * lengthDisplacement;
 
-            float jitter = (float)(Game1.rand.NextDouble() * angleJitter) - (angleJitter * .5f);
+            float jitter = (float)(MiniPirates.rand.NextDouble() * angleJitter) - (angleJitter * .5f);
             cannonball.transform.Forward = Math2.RotateVector(cannonball.transform.Forward, jitter);
             cannonball.physicsBody.Accelerate(2000);
             cannonball.physicsBody.AddVelocity(ship.GetComponent<PhysicsBody>().Velocity);

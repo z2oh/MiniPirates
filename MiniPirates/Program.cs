@@ -14,7 +14,7 @@ namespace MiniPirates
         [STAThread]
         static void Main()
         {
-            using (var game = new Game1())
+            using (var game = new MiniPirates())
                 game.Run();
         }
     }

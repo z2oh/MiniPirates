@@ -10,9 +10,9 @@ namespace MiniPirates.Engine.ScreenManagement
     public class ScreenManager
     {
         Stack<Screen> screens;
-        internal Game1 gameReference;
+        internal MiniPirates gameReference;
 
-        public ScreenManager(Game1 gameReference)
+        public ScreenManager(MiniPirates gameReference)
         {
             screens = new Stack<Screen>();
             this.gameReference = gameReference;

@@ -17,7 +17,7 @@ namespace MiniPirates
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class MiniPirates : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -28,7 +28,7 @@ namespace MiniPirates
 
         public static Vector2 centerOfScreen;
 
-        public Game1()
+        public MiniPirates()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
