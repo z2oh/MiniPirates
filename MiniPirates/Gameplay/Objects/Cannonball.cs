@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using static MiniPirates.Engine.Enum;
-using Microsoft.Xna.Framework;
 using MiniPirates.Engine.Utility;
+using Microsoft.Xna.Framework;
+using static MiniPirates.Engine.Utility.Enum;
 
 namespace MiniPirates.Gameplay.Objects
 {

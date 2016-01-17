@@ -164,7 +164,6 @@ namespace MiniPirates
 
             spriteBatch.Begin();
             spriteBatch.Draw(cannonOutline, outlineLocation, Color.White);
-            int val = (int)(cannonFilled.Width * MathHelper.Min(playerObject.GetComponent<Player>().timeSinceLastShot, 1.0f));
             spriteBatch.Draw(cannonFilled, outlineLocation, new Rectangle(0, 0, (int)(cannonFilled.Width * (MathHelper.Min(playerObject.GetComponent<Player>().timeSinceLastShot, 1000f) / 1000f)), cannonFilled.Height), Color.White);
             spriteBatch.End();
 

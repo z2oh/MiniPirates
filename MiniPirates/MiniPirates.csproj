@@ -38,7 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Engine\Enum.cs" />
+    <Compile Include="Engine\Utility\Enum.cs" />
     <Compile Include="Engine\GUI\GUIObject.cs" />
     <Compile Include="Engine\GUI\GUIRenderer.cs" />
     <Compile Include="Engine\GUI\LoadingBar.cs" />

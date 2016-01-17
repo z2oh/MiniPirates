@@ -8,7 +8,7 @@ using MiniPirates.Engine;
 using Microsoft.Xna.Framework.Input;
 using MiniPirates.Engine.Objects;
 using MiniPirates.Gameplay.Objects;
-using static MiniPirates.Engine.Enum;
+using static MiniPirates.Engine.Utility.Enum;
 
 namespace MiniPirates.Gameplay.Scripts
 {

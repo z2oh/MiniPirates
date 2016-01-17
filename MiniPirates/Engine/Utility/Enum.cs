@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MiniPirates.Engine
+namespace MiniPirates.Engine.Utility
 {
     public static class Enum
     {
