@@ -7,6 +7,7 @@ using MiniPirates.Engine.Objects.Components;
 using MiniPirates.Engine.WorldSpace;
 using MiniPirates.Gameplay.Objects;
 using MiniPirates.Gameplay.Scripts;
+using System;
 using System.Collections.Generic;
 
 namespace MiniPirates
@@ -18,6 +19,8 @@ namespace MiniPirates
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        public static Random rand;
 
         World world;
 
@@ -51,6 +54,8 @@ namespace MiniPirates
         /// </summary>
         protected override void Initialize()
         {
+            rand = new Random();
+
             world = new World();
 
             cannonballs = new List<GameObject>();
@@ -138,7 +143,7 @@ namespace MiniPirates
             base.Update(gameTime);
         }
 
-        static Vector2 outlineLocation = new Vector2(0, -12);
+        static Vector2 outlineLocation = new Vector2(4, 8);
         static Color slightlyTransparent = new Color(255, 255, 255, 180);
 
         static Color ocean = new Color(44, 107, 215);

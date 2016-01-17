@@ -46,6 +46,7 @@
     <Compile Include="Engine\Objects\Components\DrawableComponent.cs" />
     <Compile Include="Engine\Objects\Components\Component.cs" />
     <Compile Include="Engine\Objects\Components\PhysicsBody.cs" />
+    <Compile Include="Engine\Utility\Math2.cs" />
     <Compile Include="Engine\WorldSpace\World.cs" />
     <Compile Include="Gameplay\Objects\Cannonball.cs" />
     <Compile Include="Gameplay\Objects\Ship.cs" />

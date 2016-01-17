@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MiniPirates.Engine.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -154,14 +155,7 @@ namespace MiniPirates.Engine.Objects.Components
             rotation += angle;
             rotation %= 2f * (float)Math.PI;
 
-            float sin = (float)Math.Sin(angle);
-            float cos = (float)Math.Cos(angle);
-
-            float x = forward.X;
-            float y = forward.Y;
-
-            forward.X = x * cos - y * sin;
-            forward.Y = x * sin + y * cos;
+            forward = Math2.RotateVector(forward, angle);
             forward.Normalize();
 
             var temp = Vector3.Cross(Vector3.UnitZ, new Vector3(forward, 0));

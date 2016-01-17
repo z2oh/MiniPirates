@@ -14,6 +14,8 @@ namespace MiniPirates.Gameplay.Scripts
 {
     public class Player : Component
     {
+        static int numCannonballs = 10;
+
         Transform objectTransform;
         PhysicsBody body;
 
@@ -59,12 +61,18 @@ namespace MiniPirates.Gameplay.Scripts
             if(Input.KeyDown(Keys.Q) && timeSinceLastShot >= 1000f)
             {
                 timeSinceLastShot = 0.0f;
-                gameObject.World.AddGameObject(Cannonball.GenerateCannonball(gameObject, RelevantDirection.Left));
+                for (int i = 0; i < 8; i++)
+                {
+                    gameObject.World.AddGameObject(Cannonball.GenerateCannonball(gameObject, RelevantDirection.Left, (float)Math.PI / 8, 20, 80));
+                }
             }
             else if(Input.KeyDown(Keys.E) && timeSinceLastShot >= 1000f)
             {
                 timeSinceLastShot = 0.0f;
-                gameObject.World.AddGameObject(Cannonball.GenerateCannonball(gameObject, RelevantDirection.Right));
+                for (int i = 0; i < 8; i++)
+                {
+                    gameObject.World.AddGameObject(Cannonball.GenerateCannonball(gameObject, RelevantDirection.Right, (float)Math.PI / 8, 20, 80));
+                }
             }
             else
             {
