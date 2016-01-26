@@ -34,6 +34,11 @@ namespace MiniPirates.Engine
             return currentKeyboardState.IsKeyDown(key);
         }
 
+        public static bool KeyPressed(Keys key)
+        {
+            return prevKeyboardState.IsKeyDown(key) && currentKeyboardState.IsKeyUp(key);
+        }
+
         public static Vector2 GetMousePosition()
         {
             return currentMouseState.Position.ToVector2();

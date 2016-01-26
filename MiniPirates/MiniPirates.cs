@@ -43,13 +43,12 @@ namespace MiniPirates
         /// </summary>
         protected override void Initialize()
         {
+            centerOfScreen = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 2);
             rand = new Random();
             screenManager = new ScreenManager(this);
 
-
             MainMenuScreen main = new MainMenuScreen(screenManager);
-            //GameScreen main = new GameScreen(screenManager);
-            
+            screenManager.PushScreen(main);
 
             Input.Initialize();
 
@@ -60,7 +59,7 @@ namespace MiniPirates
             //graphics.ToggleFullScreen();
             //graphics.ApplyChanges();
 
-            centerOfScreen = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 2);
+            
         }
 
         /// <summary>

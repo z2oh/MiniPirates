@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MiniPirates.Engine.GUI;
 using MiniPirates.Engine.Utility;
 using System;
 using System.Collections.Generic;
@@ -124,8 +125,6 @@ namespace MiniPirates.Engine.Objects.Components
             }
         }
 
-
-
         public Transform()
         {
 
@@ -137,6 +136,18 @@ namespace MiniPirates.Engine.Objects.Components
             rotation = 0f;
             rectangle = new Vector4(position.X - (sprite.Width / 2f), position.Y - (sprite.Height / 2f), sprite.Width, sprite.Height);
             origin = new Vector2(sprite.Width / 2, sprite.Height / 2);
+            scale = Vector2.One;
+            forward = new Vector2(0, 1);
+            right = new Vector2(-1, 0);
+        }
+
+        public void InitializeValues(StringRenderer stringRenderer)
+        {
+            position = Vector2.Zero;
+            rotation = 0f;
+            Vector2 stringSize = stringRenderer.SpriteFont.MeasureString(stringRenderer.Text);
+            rectangle = new Vector4(position.X - (stringSize.X / 2f), position.Y - (stringSize.Y / 2f), stringSize.X, stringSize.Y);
+            origin = new Vector2(stringSize.X / 2f, stringSize.Y / 2f);
             scale = Vector2.One;
             forward = new Vector2(0, 1);
             right = new Vector2(-1, 0);

@@ -11,13 +11,15 @@ namespace MiniPirates.Engine.ScreenManagement
     {
         Stack<Screen> screens;
         Queue<Screen> newScreens;
-        
+        Queue<Screen> deadScreens;
+
         internal MiniPirates gameReference;
 
         public ScreenManager(MiniPirates gameReference)
         {
             screens = new Stack<Screen>();
             newScreens = new Queue<Screen>();
+            deadScreens = new Queue<Screen>();
             this.gameReference = gameReference;
         }
 
@@ -28,15 +30,24 @@ namespace MiniPirates.Engine.ScreenManagement
                 if (screen.Enabled)
                     screen.Update(gameTime);
             }
+            while(deadScreens.Count > 0)
+            {
+                screens.Pop();
+                deadScreens.Dequeue();
+                screens.Peek().Enabled = true;
+                screens.Peek().Visible = true;
+            }
             while(newScreens.Count > 0)
             {
                 screens.Push(newScreens.Dequeue());
+                screens.Peek().Update(gameTime);
             }
+
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            foreach(Screen screen in screens)
+            foreach(Screen screen in screens.Reverse())
             {
                 if (screen.Visible)
                     screen.Draw(spriteBatch);
@@ -45,7 +56,7 @@ namespace MiniPirates.Engine.ScreenManagement
 
         public void PopScreen(Screen screen)
         {
-
+            deadScreens.Enqueue(screen);
         }
 
         public void PushScreen(Screen screen)

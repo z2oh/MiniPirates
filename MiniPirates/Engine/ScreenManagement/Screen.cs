@@ -10,7 +10,7 @@ namespace MiniPirates.Engine.ScreenManagement
 {
     public abstract class Screen
     {
-        internal World world;
+        protected World world;
 
         ScreenManager screenManager;
         public ScreenManager ScreenManager
@@ -59,8 +59,6 @@ namespace MiniPirates.Engine.ScreenManagement
         public Screen(ScreenManager screenManager)
         {
             this.screenManager = screenManager;
-            screenManager.PushScreen(this);
-            LoadContent();
             Initialize();
         }
 
@@ -72,6 +70,7 @@ namespace MiniPirates.Engine.ScreenManagement
         public virtual void Initialize()
         {
             world = new World();
+            LoadContent();
         }
 
         public virtual void Update(GameTime gameTime)

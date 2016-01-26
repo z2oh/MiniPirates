@@ -8,19 +8,19 @@ using System.Text;
 
 namespace MiniPirates.Engine.GUI
 {
-    public class GUIRenderer : DrawableComponent
+    public class StringRenderer : DrawableComponent
     {
-        Texture2D sprite;
-        public Texture2D Sprite
+        string text;
+        public string Text
         {
             get
             {
-                return sprite;
+                return text;
             }
 
             set
             {
-                sprite = value;
+                text = value;
             }
         }
 
@@ -38,11 +38,25 @@ namespace MiniPirates.Engine.GUI
             }
         }
 
+        SpriteFont spriteFont;
+        public SpriteFont SpriteFont
+        {
+            get
+            {
+                return spriteFont;
+            }
+
+            set
+            {
+                spriteFont = value;
+            }
+        }
+
         Transform objectTransform;
 
         public override void Initialize()
         {
-            color = Color.White;
+            color = Color.Black;
             Transform t = gameObject.GetComponent<Transform>();
             if (null != t)
             {
@@ -54,9 +68,8 @@ namespace MiniPirates.Engine.GUI
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-            spriteBatch.Draw(sprite, objectTransform.Position, null, color, objectTransform.Rotation, objectTransform.Origin, objectTransform.Scale, SpriteEffects.None, objectTransform.Layer);
+            spriteBatch.DrawString(spriteFont, text, objectTransform.Position - objectTransform.Origin, color);
             spriteBatch.End();
-
             base.Draw(spriteBatch);
         }
     }

@@ -10,15 +10,21 @@ using MiniPirates.Engine.Objects;
 using MiniPirates.Engine.Objects.Components;
 using MiniPirates.Gameplay.Scripts;
 using MiniPirates.Gameplay.Objects;
+using MiniPirates.Engine;
+using Microsoft.Xna.Framework.Input;
 
 namespace MiniPirates.Gameplay.Screens
 {
     public class GameScreen : Screen
     {
+        #region Assets for GameScreen
         Texture2D shipHull;
         Texture2D boulder;
         Texture2D cannonOutline;
         Texture2D cannonFilled;
+        #endregion
+
+        PauseScreen pauseScreen;
 
         public static GameObject camera;
 
@@ -30,6 +36,9 @@ namespace MiniPirates.Gameplay.Screens
 
         public override void Initialize()
         {
+            pauseScreen = new PauseScreen(ScreenManager);
+            pauseScreen.Initialize();
+
             base.Initialize();
 
             GameObject playerObject = new GameObject();
@@ -63,7 +72,6 @@ namespace MiniPirates.Gameplay.Screens
             world.AddGameObject(boulderObject);
 
             playerReference = playerObject;
-            //centerOfScreen = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 2);
         }
 
         public override void LoadContent()
@@ -74,11 +82,18 @@ namespace MiniPirates.Gameplay.Screens
             boulder = ScreenManager.gameReference.Content.Load<Texture2D>("boulder");
             cannonOutline = ScreenManager.gameReference.Content.Load<Texture2D>("cannonOutline");
             cannonFilled = ScreenManager.gameReference.Content.Load<Texture2D>("cannonFilled");
+
+            pauseScreen.LoadContent();
             base.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
         {
+            if(Input.KeyPressed(Keys.Escape))
+            {
+                ScreenManager.PushScreen(pauseScreen);
+                Enabled = false;
+            }
             base.Update(gameTime);
         }
 

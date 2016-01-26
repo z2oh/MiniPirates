@@ -14,9 +14,10 @@ namespace MiniPirates.Gameplay.Screens
 {
     public class MainMenuScreen : Screen
     {
-        Vector2 centerOfButton = new Vector2(400, 200);
-        Texture2D playButton;
+        Vector2 centerOfButton = new Vector2(200, 100);
         GUIObject playButtonObject;
+
+        SpriteFont pirateFont72;
 
         public MainMenuScreen(ScreenManager screenManager)
             : base (screenManager)
@@ -26,19 +27,25 @@ namespace MiniPirates.Gameplay.Screens
 
         public override void LoadContent()
         {
-            playButton = ScreenManager.gameReference.Content.Load<Texture2D>("playButton");
+            pirateFont72 = ScreenManager.gameReference.Content.Load<SpriteFont>("Fonts/PirateFont72");
             base.LoadContent();
         }
 
         public override void Initialize()
         {
             base.Initialize();
+
             playButtonObject = new GUIObject();
+
             Transform t = playButtonObject.GetComponent<Transform>();
-            t.InitializeValues(playButton);
+
+            StringRenderer s = playButtonObject.AddNewComponent<StringRenderer>();
+            s.Text = "Play!";
+            s.SpriteFont = pirateFont72;
+
+            t.InitializeValues(s);
             t.Position = centerOfButton;
-            GUIRenderer g = playButtonObject.GetComponent<GUIRenderer>();
-            g.Sprite = playButton;
+
             world.AddGameObject(playButtonObject);
         }
 
@@ -46,19 +53,12 @@ namespace MiniPirates.Gameplay.Screens
         {
             Vector4 rect = playButtonObject.GetComponent<Transform>().Rectangle;
             Vector2 mouse = Input.GetMousePosition();
-            if(mouse.X > rect.X && mouse.Y > rect.Y && mouse.X < rect.X + rect.Z && mouse.Y < rect.Y + rect.W)
+            if(Input.WasLMBPressed() && mouse.X > rect.X && mouse.Y > rect.Y && mouse.X < rect.X + rect.Z && mouse.Y < rect.Y + rect.W)
             {
-                playButtonObject.GetComponent<Transform>().Scale = new Vector2(1.3f, 1.3f);
-                if(Input.WasLMBPressed())
-                {
-                    GameScreen screen = new GameScreen(ScreenManager);
-                    this.Enabled = false;
-                    this.Visible = false;
-                }
-            }
-            else
-            {
-                playButtonObject.GetComponent<Transform>().Scale = Vector2.One;
+                GameScreen screen = new GameScreen(ScreenManager);
+                ScreenManager.PushScreen(screen);
+                this.Enabled = false;
+                this.Visible = false;
             }
             base.Update(gameTime);
         }

@@ -45,7 +45,6 @@ namespace MiniPirates.Engine.Objects.Components
         {
             spriteBatch.Begin();
             spriteBatch.Draw(sprite,  objectTransform.Position - cameraTransform.Position, null , Color.White, objectTransform.Rotation, objectTransform.Origin, objectTransform.Scale, SpriteEffects.None, objectTransform.Layer);
-            //spriteBatch.Draw(sprite, objectTransform.Position, null, Color.White, 120f, objectTransform.Origin, Vector2.One, SpriteEffects.None, 1);
             spriteBatch.End();
 
             base.Draw(spriteBatch);
