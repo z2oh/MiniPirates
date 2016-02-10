@@ -96,7 +96,7 @@ namespace MiniPirates.Engine.Objects
             {
                 if (c.GetType() == typeof(T))
                 {
-                    comp.Add(c);
+                    comp.Add(c as T);
                 }
             }
             return comp;
