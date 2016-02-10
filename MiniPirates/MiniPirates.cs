@@ -19,6 +19,10 @@ namespace MiniPirates
     /// </summary>
     public class MiniPirates : Game
     {
+        #region Debugging bools
+        public static bool drawColliders = false;
+        #endregion
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
@@ -88,6 +92,10 @@ namespace MiniPirates
         protected override void Update(GameTime gameTime)
         {
             Input.Update();
+            if(Input.KeyPressed(Keys.F3))
+            {
+                drawColliders = !drawColliders;
+            }
             screenManager.Update(gameTime);
             base.Update(gameTime);
         }

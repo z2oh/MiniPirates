@@ -53,9 +53,7 @@ namespace MiniPirates.Engine.GUI
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
             spriteBatch.Draw(sprite, objectTransform.Position, null, color, objectTransform.Rotation, objectTransform.Origin, objectTransform.Scale, SpriteEffects.None, objectTransform.Layer);
-            spriteBatch.End();
 
             base.Draw(spriteBatch);
         }

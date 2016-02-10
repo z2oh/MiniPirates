@@ -38,11 +38,13 @@ namespace MiniPirates.Engine.WorldSpace
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.Begin();
             foreach(GameObject go in gameObjects)
             {
                 if (!go.IsDead)
                     go.Draw(spriteBatch);
             }
+            spriteBatch.End();
         }
 
         public void AddGameObject(GameObject gameObject)
