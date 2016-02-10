@@ -66,26 +66,48 @@ namespace MiniPirates.Engine.Objects
             components.Add(a);
             return a;
         }
-
-        //public void AddComponent(Component c)
-        //{
-        //    c.gameObject = this;
-        //    components.Add(c);
-        //}
-
+        
+        /// <summary>
+        /// Returns the first occurence of a component of Type T.
+        /// </summary>
+        /// <typeparam name="T">The type of the component to get.</typeparam>
+        /// <returns>The first occurence of the component of type T.</returns>
         public T GetComponent<T>() where T : Component
         {
             foreach(Component c in components)
             {
                 if(c.GetType() == typeof(T))
                 {
-                    //return (T) Convert.ChangeType(c, typeof(T));
                     return c as T;
                 }
             }
             return default(T);
         }
 
+        /// <summary>
+        /// Returns a list of all the components of type T.
+        /// </summary>
+        /// <typeparam name="T">The type of component to get.</typeparam>
+        /// <returns>A list of all of the components of type T.</returns>
+        public List<T> GetAllComponents<T>() where T : Component
+        {
+            List<T> comp = new List<T>();
+            foreach (Component c in components)
+            {
+                if (c.GetType() == typeof(T))
+                {
+                    comp.Add(c);
+                }
+            }
+            return comp;
+        }
+
+        /// <summary>
+        /// Returns the i'th component found on the object of Type T.
+        /// </summary>
+        /// <typeparam name="T">The Type of component to get.</typeparam>
+        /// <param name="number">Which component of type T you want to return (first, second, etc.).</param>
+        /// <returns>The i'th component found on the object of Type T.</returns>
         public T GetComponent<T>(int number) where T : Component
         {
             int found = 0;
@@ -94,7 +116,6 @@ namespace MiniPirates.Engine.Objects
                 if (c.GetType() == typeof(T))
                 {
                     if(found == number)
-                        //return (T) Convert.ChangeType(c, typeof(T));
                         return c as T;
                     found++;
                 }
