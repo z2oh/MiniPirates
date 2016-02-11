@@ -25,8 +25,6 @@ namespace MiniPirates.Gameplay.Screens
 
         public static GameObject camera;
 
-        CollisionManager collisionManager;
-
         public GameScreen(ScreenManager screenManager)
             : base(screenManager)
         {
@@ -35,7 +33,6 @@ namespace MiniPirates.Gameplay.Screens
 
         public override void Initialize()
         {
-            collisionManager = new CollisionManager();
             pauseScreen = new PauseScreen(ScreenManager);
             pauseScreen.Initialize();
 
@@ -83,9 +80,9 @@ namespace MiniPirates.Gameplay.Screens
             collBoulder2.InitializeValues(camera);
             collPlayer.InitializeValues(camera);
 
-            collisionManager.AddStaticCollider(collBoulder);
-            collisionManager.AddStaticCollider(collBoulder2);
-            collisionManager.AddDynamicCollider(collPlayer);
+            world.collisionManager.AddStaticCollider(collBoulder);
+            world.collisionManager.AddStaticCollider(collBoulder2);
+            world.collisionManager.AddDynamicCollider(collPlayer);
 
             world.AddGameObject(camera);
             world.AddGameObject(playerObject);
@@ -110,7 +107,6 @@ namespace MiniPirates.Gameplay.Screens
 
         public override void Update(GameTime gameTime)
         {
-            collisionManager.CheckForCollisions();
             if(Input.KeyPressed(Keys.Escape))
             {
                 ScreenManager.PushScreen(pauseScreen);

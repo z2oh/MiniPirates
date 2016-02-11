@@ -22,19 +22,35 @@ namespace MiniPirates.Engine.Physics
         {
             for(int i = 0; i < dynamicColliders.Count; i++)
             {
-                /*
-                for(int j = i; j < dynamicColliders.Count; j++)
+                for(int j = i+1; j < dynamicColliders.Count; j++)
                 {
-                    Collision c = CheckForCollision(dynamicColliders[i] as MultiCircleCollider, dynamicColliders[j] as CircleCollider);
-                    if(c != null)
+                    Collision c;
+                    if (dynamicColliders[i] is CircleCollider)
                     {
-
+                        c = CheckForCollision(dynamicColliders[i] as CircleCollider, dynamicColliders[j] as CircleCollider);
+                    }
+                    else
+                    {
+                        c = CheckForCollision(dynamicColliders[i] as MultiCircleCollider, dynamicColliders[j] as CircleCollider);
+                    }
+                    if (c != null)
+                    {
+                        dynamicColliders[i].newCollisions.Add(c);
+                        dynamicColliders[j].newCollisions.Add(c);
                     }
                 }
-                */
+                
                 for(int j = 0; j < staticColliders.Count; j++)
                 {
-                    Collision c = CheckForCollision(dynamicColliders[i] as MultiCircleCollider, staticColliders[j] as CircleCollider);
+                    Collision c;
+                    if(dynamicColliders[i] is CircleCollider)
+                    {
+                        c = CheckForCollision(dynamicColliders[i] as CircleCollider, staticColliders[j] as CircleCollider);
+                    }
+                    else
+                    {
+                        c = CheckForCollision(dynamicColliders[i] as MultiCircleCollider, staticColliders[j] as CircleCollider);
+                    }
                     if(c != null)
                     {
                         dynamicColliders[i].newCollisions.Add(c);
@@ -96,6 +112,11 @@ namespace MiniPirates.Engine.Physics
         public void AddDynamicCollider(Collider c)
         {
             dynamicColliders.Add(c);
+        }
+
+        public void RemoveDynamicCollider(Collider c)
+        {
+            dynamicColliders.Remove(c);
         }
     }
 }

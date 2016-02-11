@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MiniPirates.Engine.Objects;
+using MiniPirates.Engine.Physics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,14 +14,18 @@ namespace MiniPirates.Engine.WorldSpace
         List<GameObject> gameObjects;
         List<GameObject> deadObjects;
 
+        public CollisionManager collisionManager;
+
         public World()
         {
             gameObjects = new List<GameObject>();
             deadObjects = new List<GameObject>();
+            collisionManager = new CollisionManager();
         }
 
         public void Update(GameTime gameTime)
         {
+            collisionManager.CheckForCollisions();
             for(int i = 0; i < gameObjects.Count; i++)
             {
                 GameObject go = gameObjects[i];
@@ -57,6 +62,7 @@ namespace MiniPirates.Engine.WorldSpace
         {
             gameObject.World = null;
             gameObject.IsDead = true;
+            deadObjects.Add(gameObject);
         }
     }
 }

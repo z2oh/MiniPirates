@@ -12,10 +12,10 @@ namespace MiniPirates.Engine.Objects
     public class GameObject
     {
         List<Component> components;
-        World world;
 
         public bool IsDead = false;
 
+        World world;
         public World World
         {
             get

@@ -9,6 +9,7 @@ using MiniPirates.Engine.Utility;
 using Microsoft.Xna.Framework;
 using static MiniPirates.Engine.Utility.Enum;
 using MiniPirates.Gameplay.Screens;
+using MiniPirates.Engine.WorldSpace;
 
 namespace MiniPirates.Gameplay.Objects
 {
@@ -19,10 +20,12 @@ namespace MiniPirates.Gameplay.Objects
         Transform transform;
         SpriteRenderer spriteRenderer;
         PhysicsBody physicsBody;
+        CircleCollider coll;
 
         float distanceToTravel = 1000f;
 
-        public Cannonball()
+        public Cannonball(World world)
+            :base()
         {
             transform = AddNewComponent<Transform>();
             transform.InitializeValues(cannonballSprite);
@@ -30,6 +33,9 @@ namespace MiniPirates.Gameplay.Objects
             spriteRenderer.Sprite = cannonballSprite;
             spriteRenderer.InitializeValues(GameScreen.camera);
             physicsBody = AddNewComponent<PhysicsBody>();
+            coll = AddNewComponent<CircleCollider>();
+            coll.InitializeValues(GameScreen.camera);
+            world.collisionManager.AddDynamicCollider(coll);
         }
 
         public override void Update(GameTime gameTime)
@@ -37,6 +43,7 @@ namespace MiniPirates.Gameplay.Objects
             distanceToTravel -= physicsBody.Speed * (gameTime.ElapsedGameTime.Milliseconds / 1000f);
             if(distanceToTravel <= 0)
             {
+                World.collisionManager.RemoveDynamicCollider(coll); 
                 this.Destroy();
             }
             base.Update(gameTime);
@@ -47,6 +54,8 @@ namespace MiniPirates.Gameplay.Objects
             spriteRenderer.Draw(spriteBatch);
             base.Draw(spriteBatch);
         }
+
+        //minkowski differences
 
         /// <summary>
         /// This function will generate a cannonball.
@@ -61,7 +70,7 @@ namespace MiniPirates.Gameplay.Objects
         {
             // We get the ship's transform.
             Transform shipTransform = ship.GetComponent<Transform>();
-            Cannonball cannonball = new Cannonball();
+            Cannonball cannonball = new Cannonball(ship.World);
 
             cannonball.transform.Position = shipTransform.Position;
             if (direction == RelevantDirection.Right)
