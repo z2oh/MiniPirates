@@ -14,5 +14,12 @@ namespace MiniPirates.Engine.Utility
             Left,
             Back
         }
+
+        public enum ColliderType
+        {
+            Undefined,
+            Static,
+            Dynamic
+        }
     }
 }

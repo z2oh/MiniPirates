@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MiniPirates.Engine.Objects.Components;
+using MiniPirates.Engine.Physics;
 using MiniPirates.Engine.WorldSpace;
 using System;
 using System.Collections.Generic;
@@ -102,6 +103,19 @@ namespace MiniPirates.Engine.Objects
             return comp;
         }
 
+        public List<T> GetAllComponentsDerivedFromT<T>() where T : Component
+        {
+            List<T> comp = new List<T>();
+            foreach (Component c in components)
+            {
+                if (c is T)
+                {
+                    comp.Add(c as T);
+                }
+            }
+            return comp;
+        }
+
         /// <summary>
         /// Returns the i'th component found on the object of Type T.
         /// </summary>
@@ -125,6 +139,22 @@ namespace MiniPirates.Engine.Objects
 
         public void Destroy()
         {
+            List<Collider> cs = GetAllComponentsDerivedFromT<Collider>();
+            foreach(Collider c in cs)
+            {
+                foreach(Collision coll in c.collisions)
+                {
+                    if(coll.C1 == c)
+                    {
+                        coll.C2.ExitedCollision(coll);
+                    }
+                    else
+                    {
+                        coll.C1.ExitedCollision(coll);
+                    }
+                }
+                world.collisionManager.RemoveCollider(c);
+            }
             world.RemoveGameObject(this);
         }
     }

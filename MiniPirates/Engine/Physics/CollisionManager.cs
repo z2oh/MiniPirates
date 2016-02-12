@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static MiniPirates.Engine.Utility.Enum;
 
 namespace MiniPirates.Engine.Physics
 {
@@ -155,19 +156,50 @@ namespace MiniPirates.Engine.Physics
             return null;
         }
 
+        public void AddCollider(Collider c)
+        {
+            if(c.ColliderType == ColliderType.Undefined || c.ColliderType == ColliderType.Dynamic)
+            {
+                AddDynamicCollider(c);
+            }
+            else
+            {
+                AddStaticCollider(c);
+            }
+        }
+
         public void AddStaticCollider(Collider c)
         {
+            c.ColliderType = ColliderType.Static;
             staticColliders.Add(c);
         }
 
         public void AddDynamicCollider(Collider c)
         {
+            c.ColliderType = ColliderType.Dynamic;
             dynamicColliders.Add(c);
+        }
+
+        public void RemoveCollider(Collider c)
+        {
+            if(c.ColliderType == ColliderType.Dynamic)
+            {
+                RemoveDynamicCollider(c);
+            }
+            else if (c.ColliderType == ColliderType.Static)
+            {
+                RemoveStaticCollider(c);
+            }
         }
 
         public void RemoveDynamicCollider(Collider c)
         {
             dynamicColliders.Remove(c);
+        }
+
+        public void RemoveStaticCollider(Collider c)
+        {
+            staticColliders.Remove(c);
         }
 
         static HashSet<T> Copyset<T>(HashSet<T> set)

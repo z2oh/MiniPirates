@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static MiniPirates.Engine.Utility.Enum;
+using MiniPirates.Engine.Utility;
 
 namespace MiniPirates.Engine.Objects.Components
 {
@@ -12,6 +14,20 @@ namespace MiniPirates.Engine.Objects.Components
 
     public abstract class Collider : DrawableComponent
     {
+        ColliderType colliderType;
+        public ColliderType ColliderType
+        {
+            get
+            {
+                return colliderType;
+            }
+
+            set
+            {
+                colliderType = value;
+            }
+        }
+
         internal Transform objectTransform;
         internal Transform cameraTransform;
 
