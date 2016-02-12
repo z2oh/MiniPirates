@@ -5,6 +5,8 @@ This is my game for cgc-spring-2016. It is an arcade style pirate themed game wh
 Accelerate with W, decelerate with S, turn left and right with A and D.
 Shoot left with Q and shoot right with E.
 
-The game is still in very, very, very early alpha.
+The game is still in very, very early alpha.
 
-The game and engine are written in MonoGame. Currently, no outside libraries or code is being used.
+The game and engine are written in MonoGame.
+
+Development blog for the game can be found at: https://cse.sc.edu/~jaday/cgc/spring-2016.html
