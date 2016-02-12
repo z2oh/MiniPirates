@@ -12,64 +12,98 @@ namespace MiniPirates.Engine.Physics
         List<Collider> dynamicColliders;
         List<Collider> staticColliders;
 
+        HashSet<Collision> previousCollisions;
+        HashSet<Collision> activeCollisions;
+
         public CollisionManager()
         {
             dynamicColliders = new List<Collider>();
             staticColliders = new List<Collider>();
+
+            previousCollisions = new HashSet<Collision>();
+            activeCollisions = new HashSet<Collision>();
         }
 
         public void CheckForCollisions()
         {
+            previousCollisions = Copyset<Collision>(activeCollisions);
+            activeCollisions.Clear();
+
+            // For each dynamic collider we check if it is colliding with any other dynamic colliders or any static colliders.
             for(int i = 0; i < dynamicColliders.Count; i++)
             {
-                for(int j = i+1; j < dynamicColliders.Count; j++)
+                for (int j = i+1; j < dynamicColliders.Count; j++)
                 {
-                    Collision c;
-                    if (dynamicColliders[i] is CircleCollider)
-                    {
-                        c = CheckForCollision(dynamicColliders[i] as CircleCollider, dynamicColliders[j] as CircleCollider);
-                    }
-                    else
-                    {
-                        c = CheckForCollision(dynamicColliders[i] as MultiCircleCollider, dynamicColliders[j] as CircleCollider);
-                    }
+                    Collision c = CheckForCollision(dynamicColliders[i], dynamicColliders[j]);
                     if (c != null)
                     {
-                        dynamicColliders[i].newCollisions.Add(c);
-                        dynamicColliders[j].newCollisions.Add(c);
+                        activeCollisions.Add(c);
                     }
                 }
                 
                 for(int j = 0; j < staticColliders.Count; j++)
                 {
-                    Collision c;
-                    if(dynamicColliders[i] is CircleCollider)
+                    Collision c = CheckForCollision(dynamicColliders[i], staticColliders[j]);
+                    if (c != null)
                     {
-                        c = CheckForCollision(dynamicColliders[i] as CircleCollider, staticColliders[j] as CircleCollider);
-                    }
-                    else
-                    {
-                        c = CheckForCollision(dynamicColliders[i] as MultiCircleCollider, staticColliders[j] as CircleCollider);
-                    }
-                    if(c != null)
-                    {
-                        dynamicColliders[i].newCollisions.Add(c);
-                        staticColliders[j].newCollisions.Add(c);
+                        activeCollisions.Add(c);
                     }
                 }
             }
-            for(int i = 0; i < dynamicColliders.Count; i++)
+
+            HashSet<Collision> newCollisions = Copyset<Collision>(activeCollisions);
+            newCollisions.ExceptWith(previousCollisions);
+
+            HashSet<Collision> continuedCollisions = Copyset<Collision>(activeCollisions);
+            continuedCollisions.IntersectWith(previousCollisions);
+
+            HashSet<Collision> exitedCollisions = Copyset<Collision>(previousCollisions);
+            exitedCollisions.ExceptWith(continuedCollisions);
+
+            foreach (Collision c in newCollisions)
             {
-                dynamicColliders[i].collisions = dynamicColliders[i].newCollisions.ToList<Collision>();
-                dynamicColliders[i].newCollisions.Clear();
-                dynamicColliders[i].IsColliding = (dynamicColliders[i].collisions.Count > 0);
+                c.C1.EnteredCollision(c);
+                c.C2.EnteredCollision(c);
             }
-            for(int i = 0; i < staticColliders.Count; i++)
+
+            foreach (Collision c in continuedCollisions)
             {
-                staticColliders[i].collisions = staticColliders[i].newCollisions.ToList<Collision>();
-                staticColliders[i].newCollisions.Clear();
-                staticColliders[i].IsColliding = (staticColliders[i].collisions.Count > 0);
+                c.C1.ContinuedCollision(c);
+                c.C2.ContinuedCollision(c);
             }
+
+            foreach (Collision c in exitedCollisions)
+            {
+                c.C1.ExitedCollision(c);
+                c.C2.ExitedCollision(c);
+            }
+        }
+
+        private Collision CheckForCollision(Collider c1, Collider c2)
+        {
+            if(c1 is CircleCollider)
+            {
+                if(c2 is CircleCollider)
+                {
+                    return CheckForCollision(c1 as CircleCollider, c2 as CircleCollider);
+                }
+                else if(c2 is MultiCircleCollider)
+                {
+                    return CheckForCollision(c2 as MultiCircleCollider, c1 as CircleCollider);
+                }
+            }
+            else if(c1 is MultiCircleCollider)
+            {
+                if (c2 is CircleCollider)
+                {
+                    return CheckForCollision(c1 as MultiCircleCollider, c2 as CircleCollider);
+                }
+                else if (c2 is MultiCircleCollider)
+                {
+                    return CheckForCollision(c1 as MultiCircleCollider, c2 as MultiCircleCollider);
+                }
+            }
+            return null;
         }
 
         /// <summary>
@@ -104,6 +138,23 @@ namespace MiniPirates.Engine.Physics
             return null;
         }
 
+        private Collision CheckForCollision(MultiCircleCollider c1, MultiCircleCollider c2)
+        {
+            foreach (Tuple<Vector2, float> circle in c1.Circles)
+            {
+                foreach (Tuple<Vector2, float> circle2 in c2.Circles)
+                {
+                    float lengthSquared = (circle.Item1 - circle2.Item1).Length();
+                    float sumOfRadiiSquared = circle.Item2 + circle2.Item2;
+                    if (lengthSquared < sumOfRadiiSquared)
+                    {
+                        return new Collision(c1, c2);
+                    }
+                }
+            }
+            return null;
+        }
+
         public void AddStaticCollider(Collider c)
         {
             staticColliders.Add(c);
@@ -117,6 +168,16 @@ namespace MiniPirates.Engine.Physics
         public void RemoveDynamicCollider(Collider c)
         {
             dynamicColliders.Remove(c);
+        }
+
+        static HashSet<T> Copyset<T>(HashSet<T> set)
+        {
+            HashSet<T> newSet = new HashSet<T>();
+            foreach(T t in set)
+            {
+                newSet.Add(t);
+            }
+            return newSet;
         }
     }
 }

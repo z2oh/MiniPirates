@@ -7,7 +7,7 @@ using MiniPirates.Engine.Objects.Components;
 using MiniPirates.Engine.ScreenManagement;
 using MiniPirates.Gameplay.Scripts;
 using MiniPirates.Gameplay.Objects;
-using C3.XNA;
+using C3.MonoGame;
 using MiniPirates.Engine.Physics;
 
 namespace MiniPirates.Gameplay.Screens
@@ -39,6 +39,7 @@ namespace MiniPirates.Gameplay.Screens
             base.Initialize();
 
             GameObject playerObject = new GameObject();
+            GameObject enemyObject = new GameObject();
             GameObject boulderObject = new GameObject();
             GameObject boulderObject2 = new GameObject();
             camera = new GameObject();
@@ -68,6 +69,15 @@ namespace MiniPirates.Gameplay.Screens
             Player player = playerObject.AddNewComponent<Player>();
             MultiCircleCollider collPlayer = playerObject.AddNewComponent<MultiCircleCollider>();
 
+            // Enemy
+            Transform t2 = enemyObject.AddNewComponent<Transform>();
+            t2.InitializeValues(shipHull);
+            t2.Position = new Vector2(300, -100);
+            SpriteRenderer rp2 = enemyObject.AddNewComponent<SpriteRenderer>();
+            rp2.Sprite = shipHull;
+            PhysicsBody b2 = enemyObject.AddNewComponent<PhysicsBody>();
+            MultiCircleCollider collEnemy = enemyObject.AddNewComponent<MultiCircleCollider>();
+
             // Camera
             Transform ct = camera.AddNewComponent<Transform>();
             FollowPlayer fp = camera.AddNewComponent<FollowPlayer>();
@@ -76,15 +86,19 @@ namespace MiniPirates.Gameplay.Screens
             r.InitializeValues(camera);
             r1.InitializeValues(camera);
             r2.InitializeValues(camera);
+            rp2.InitializeValues(camera);
             collBoulder.InitializeValues(camera);
             collBoulder2.InitializeValues(camera);
             collPlayer.InitializeValues(camera);
+            collEnemy.InitializeValues(camera);
 
             world.collisionManager.AddStaticCollider(collBoulder);
             world.collisionManager.AddStaticCollider(collBoulder2);
             world.collisionManager.AddDynamicCollider(collPlayer);
+            world.collisionManager.AddDynamicCollider(collEnemy);
 
             world.AddGameObject(camera);
+            world.AddGameObject(enemyObject);
             world.AddGameObject(playerObject);
             world.AddGameObject(boulderObject);
             world.AddGameObject(boulderObject2);

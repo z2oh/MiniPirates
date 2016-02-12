@@ -1,3 +1,0 @@
-http://sourceforge.net/projects/primitives2d/?source=typ_redirect
-
-Converted to use MonoGame.

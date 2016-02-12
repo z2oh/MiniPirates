@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 using static MiniPirates.Engine.Utility.Enum;
 using MiniPirates.Gameplay.Screens;
 using MiniPirates.Engine.WorldSpace;
+using MiniPirates.Engine.Physics;
 
 namespace MiniPirates.Gameplay.Objects
 {
@@ -24,6 +25,8 @@ namespace MiniPirates.Gameplay.Objects
 
         float distanceToTravel = 1000f;
 
+        public bool shouldExplode = false;
+
         public Cannonball(World world)
             :base()
         {
@@ -36,10 +39,16 @@ namespace MiniPirates.Gameplay.Objects
             coll = AddNewComponent<CircleCollider>();
             coll.InitializeValues(GameScreen.camera);
             world.collisionManager.AddDynamicCollider(coll);
+            coll.onEnterCollision += new CollisionEnter(OnCollisionEnter);
         }
 
         public override void Update(GameTime gameTime)
         {
+            if(shouldExplode)
+            {
+                World.collisionManager.RemoveDynamicCollider(coll);
+                this.Destroy();
+            }
             distanceToTravel -= physicsBody.Speed * (gameTime.ElapsedGameTime.Milliseconds / 1000f);
             if(distanceToTravel <= 0)
             {
@@ -53,6 +62,25 @@ namespace MiniPirates.Gameplay.Objects
         {
             spriteRenderer.Draw(spriteBatch);
             base.Draw(spriteBatch);
+        }
+
+        public void OnCollisionEnter(object sender, Collision c)
+        {
+            if(c.G1 is Cannonball && c.G2 is Cannonball)
+            {
+                return;
+            }
+            else
+            {
+                if(c.G1 is Cannonball)
+                {
+                    c.G1.Destroy();
+                }
+                else if(c.G2 is Cannonball)
+                {
+                    c.G2.Destroy();
+                }
+            }
         }
 
         //minkowski differences
@@ -83,8 +111,6 @@ namespace MiniPirates.Gameplay.Objects
                 cannonball.transform.Forward = -shipTransform.Right;
                 cannonball.transform.Position += -shipTransform.Right * sideDisplacement;
             }
-
-            
 
             float lengthDisplacement = (float)(MiniPirates.rand.NextDouble() * shipLength) - (shipLength * .5f);
             cannonball.transform.Position += shipTransform.Forward * lengthDisplacement;

@@ -6,24 +6,14 @@ using System.Text;
 
 namespace MiniPirates.Engine.Objects.Components
 {
+    public delegate void CollisionEnter(object sender, Collision c);
+    public delegate void CollisionPersist(object sender, Collision c);
+    public delegate void CollisionExit(object sender, Collision c);
+
     public abstract class Collider : DrawableComponent
     {
         internal Transform objectTransform;
         internal Transform cameraTransform;
-
-        internal int numCollisions;
-        public int NumCollisions
-        {
-            get
-            {
-                return numCollisions;
-            }
-
-            set
-            {
-                numCollisions = value;
-            }
-        }
 
         internal bool isColliding;
         public bool IsColliding
@@ -40,14 +30,14 @@ namespace MiniPirates.Engine.Objects.Components
         }
 
         public List<Collision> collisions;
-        public List<Collision> newCollisions;
 
-        internal delegate void behavior(Collision collision);
+        public event CollisionEnter onEnterCollision;
+        public event CollisionPersist onContinueCollision;
+        public event CollisionExit onExitCollision;
 
         public override void Initialize()
         {
             collisions = new List<Collision>();
-            newCollisions = new List<Collision>();
             isColliding = false;
             Transform t = gameObject.GetComponent<Transform>();
             if (null != t)
@@ -56,10 +46,26 @@ namespace MiniPirates.Engine.Objects.Components
             }
         }
 
-        public void SetBehavior(Delegate d)
+        internal virtual void EnteredCollision(Collision c)
         {
-            behavior b1 = (behavior)d;
-            b1(null);
+            collisions.Add(c);
+            isColliding = true;
+            if (onEnterCollision != null)
+                onEnterCollision(this, c);
+        }
+
+        internal virtual void ContinuedCollision(Collision c)
+        {
+            if (onContinueCollision != null)
+                onContinueCollision(this, c);
+        }
+
+        internal virtual void ExitedCollision(Collision c)
+        {
+            collisions.Remove(c);
+            isColliding = collisions.Count > 0;
+            if (onExitCollision != null)
+                onExitCollision(this, c);
         }
 
         public virtual void InitializeValues(GameObject camera)

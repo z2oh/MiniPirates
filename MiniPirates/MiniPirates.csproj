@@ -71,8 +71,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="C3.XNA.Primitives2D">
-      <HintPath>lib\C3.XNA.Primitives2D.dll</HintPath>
+    <Reference Include="C3.MonoGame.Primitives2D">
+      <HintPath>lib\C3.MonoGame.Primitives2D.dll</HintPath>
     </Reference>
     <Reference Include="MonoGame.Framework, Version=3.4.0.456, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

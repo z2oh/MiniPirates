@@ -17,7 +17,6 @@ namespace MiniPirates.Gameplay.Objects
             : base()
         {
             transform = AddNewComponent<Transform>();
-            
             spriteRenderer = AddNewComponent<SpriteRenderer>();
             body = AddNewComponent<PhysicsBody>();
         }

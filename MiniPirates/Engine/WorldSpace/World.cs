@@ -25,7 +25,6 @@ namespace MiniPirates.Engine.WorldSpace
 
         public void Update(GameTime gameTime)
         {
-            collisionManager.CheckForCollisions();
             for(int i = 0; i < gameObjects.Count; i++)
             {
                 GameObject go = gameObjects[i];
@@ -34,7 +33,8 @@ namespace MiniPirates.Engine.WorldSpace
                 else
                     deadObjects.Add(go);
             }
-            foreach(GameObject go in deadObjects)
+            collisionManager.CheckForCollisions();
+            foreach (GameObject go in deadObjects)
             {
                 gameObjects.Remove(go);
             }
@@ -60,7 +60,6 @@ namespace MiniPirates.Engine.WorldSpace
 
         public void RemoveGameObject(GameObject gameObject)
         {
-            gameObject.World = null;
             gameObject.IsDead = true;
             deadObjects.Add(gameObject);
         }
