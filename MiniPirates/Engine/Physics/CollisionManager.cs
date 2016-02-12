@@ -64,7 +64,8 @@ namespace MiniPirates.Engine.Physics
             foreach (Collision c in newCollisions)
             {
                 c.C1.EnteredCollision(c);
-                c.C2.EnteredCollision(c);
+                if(!c.IsDead())
+                    c.C2.EnteredCollision(c);
             }
 
             foreach (Collision c in continuedCollisions)

@@ -72,5 +72,10 @@ namespace MiniPirates.Engine.Physics
             this.G1 = c1.gameObject;
             this.G2 = c2.gameObject;
         }
+
+        public bool IsDead()
+        {
+            return g1.IsDead || g2.IsDead;
+        }
     }
 }
