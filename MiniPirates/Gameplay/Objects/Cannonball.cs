@@ -34,10 +34,10 @@ namespace MiniPirates.Gameplay.Objects
             transform.InitializeValues(cannonballSprite);
             spriteRenderer = AddNewComponent<SpriteRenderer>();
             spriteRenderer.Sprite = cannonballSprite;
-            spriteRenderer.InitializeValues(GameScreen.camera);
+            spriteRenderer.InitializeValues(world.Camera);
             physicsBody = AddNewComponent<PhysicsBody>();
             coll = AddNewComponent<CircleCollider>();
-            coll.InitializeValues(GameScreen.camera);
+            coll.InitializeValues(world.Camera);
             world.collisionManager.AddDynamicCollider(coll);
             coll.onEnterCollision += new CollisionEnter(OnCollisionEnter);
         }
@@ -74,10 +74,18 @@ namespace MiniPirates.Gameplay.Objects
             {
                 if(c.G1 is Cannonball)
                 {
+                    if(c.G2 is Ship)
+                    {
+                        (c.G2 as Ship).health -= 50;
+                    }
                     c.G1.Destroy();
                 }
                 else if(c.G2 is Cannonball)
                 {
+                    if (c.G1 is Ship)
+                    {
+                        (c.G1 as Ship).health -= 50;
+                    }
                     c.G2.Destroy();
                 }
             }

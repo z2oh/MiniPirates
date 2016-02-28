@@ -23,8 +23,6 @@ namespace MiniPirates.Gameplay.Screens
 
         PauseScreen pauseScreen;
 
-        public static GameObject camera;
-
         public GameScreen(ScreenManager screenManager)
             : base(screenManager)
         {
@@ -38,11 +36,21 @@ namespace MiniPirates.Gameplay.Screens
 
             base.Initialize();
 
-            GameObject playerObject = new GameObject();
+            Ship.basicShip = shipHull;
+
+            FollowPlayer fp = world.Camera.AddNewComponent<FollowPlayer>();
+
             GameObject enemyObject = new GameObject();
             GameObject boulderObject = new GameObject();
             GameObject boulderObject2 = new GameObject();
-            camera = new GameObject();
+
+            Ship playerShip = new Ship();
+            playerShip.SetSprite(shipHull);
+            world.AddGameObject(playerShip);
+            playerShip.AddNewComponent<Player>();
+            playerShip.InitializeValues();
+
+            fp.InitializeValues(playerShip);
 
             // Boulder
             Transform tb = boulderObject.AddNewComponent<Transform>();
@@ -60,15 +68,6 @@ namespace MiniPirates.Gameplay.Screens
             tb2.Position = new Vector2(350, 250);
             CircleCollider collBoulder2 = boulderObject2.AddNewComponent<CircleCollider>();
 
-            // Player
-            Transform t = playerObject.AddNewComponent<Transform>();
-            t.InitializeValues(shipHull);
-            SpriteRenderer r = playerObject.AddNewComponent<SpriteRenderer>();
-            r.Sprite = shipHull;
-            PhysicsBody b = playerObject.AddNewComponent<PhysicsBody>();
-            Player player = playerObject.AddNewComponent<Player>();
-            MultiCircleCollider collPlayer = playerObject.AddNewComponent<MultiCircleCollider>();
-
             // Enemy
             Transform t2 = enemyObject.AddNewComponent<Transform>();
             t2.InitializeValues(shipHull);
@@ -78,32 +77,22 @@ namespace MiniPirates.Gameplay.Screens
             PhysicsBody b2 = enemyObject.AddNewComponent<PhysicsBody>();
             MultiCircleCollider collEnemy = enemyObject.AddNewComponent<MultiCircleCollider>();
 
-            // Camera
-            Transform ct = camera.AddNewComponent<Transform>();
-            FollowPlayer fp = camera.AddNewComponent<FollowPlayer>();
-            fp.InitializeValues(playerObject);
-
-            r.InitializeValues(camera);
-            r1.InitializeValues(camera);
-            r2.InitializeValues(camera);
-            rp2.InitializeValues(camera);
-            collBoulder.InitializeValues(camera);
-            collBoulder2.InitializeValues(camera);
-            collPlayer.InitializeValues(camera);
-            collEnemy.InitializeValues(camera);
+            r1.InitializeValues(world.Camera);
+            r2.InitializeValues(world.Camera);
+            rp2.InitializeValues(world.Camera);
+            collBoulder.InitializeValues(world.Camera);
+            collBoulder2.InitializeValues(world.Camera);
+            collEnemy.InitializeValues(world.Camera);
 
             world.collisionManager.AddStaticCollider(collBoulder);
             world.collisionManager.AddStaticCollider(collBoulder2);
-            world.collisionManager.AddDynamicCollider(collPlayer);
             world.collisionManager.AddDynamicCollider(collEnemy);
 
-            world.AddGameObject(camera);
             world.AddGameObject(enemyObject);
-            world.AddGameObject(playerObject);
             world.AddGameObject(boulderObject);
             world.AddGameObject(boulderObject2);
 
-            playerReference = playerObject;
+            playerReference = playerShip;
         }
 
         public override void LoadContent()

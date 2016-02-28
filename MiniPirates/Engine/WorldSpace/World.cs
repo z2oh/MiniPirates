@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MiniPirates.Engine.Objects;
+using MiniPirates.Engine.Objects.Components;
 using MiniPirates.Engine.Physics;
 using System;
 using System.Collections.Generic;
@@ -16,11 +17,23 @@ namespace MiniPirates.Engine.WorldSpace
 
         public CollisionManager collisionManager;
 
+        GameObject camera;
+        public GameObject Camera
+        {
+            get
+            {
+                return camera;
+            }
+        }
+
         public World()
         {
             gameObjects = new List<GameObject>();
             deadObjects = new List<GameObject>();
             collisionManager = new CollisionManager();
+            camera = new GameObject();
+            camera.AddNewComponent<Transform>();
+            AddGameObject(camera);
         }
 
         public void Update(GameTime gameTime)
