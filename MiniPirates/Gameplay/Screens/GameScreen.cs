@@ -19,6 +19,8 @@ namespace MiniPirates.Gameplay.Screens
         Texture2D boulder;
         Texture2D cannonOutline;
         Texture2D cannonFilled;
+
+        Texture2D animatedSpriteSheetTest;
         #endregion
 
         PauseScreen pauseScreen;
@@ -49,6 +51,12 @@ namespace MiniPirates.Gameplay.Screens
             world.AddGameObject(playerShip);
             playerShip.AddNewComponent<Player>();
             playerShip.InitializeValues();
+
+            AnimatedSpriteRenderer playerAnim = playerShip.AddNewComponent<AnimatedSpriteRenderer>();
+            playerAnim.SpriteSheet = animatedSpriteSheetTest;
+            playerAnim.SpriteSize = new Rectangle(0, 0, 70, 29);
+            playerAnim.TimePerFrame = 150;
+            playerAnim.NumFrames = 4;
 
             fp.InitializeValues(playerShip);
 
@@ -84,6 +92,8 @@ namespace MiniPirates.Gameplay.Screens
             collBoulder2.InitializeValues(world.Camera);
             collEnemy.InitializeValues(world.Camera);
 
+            playerAnim.InitializeValues(world.Camera);
+
             world.collisionManager.AddStaticCollider(collBoulder);
             world.collisionManager.AddStaticCollider(collBoulder2);
             world.collisionManager.AddDynamicCollider(collEnemy);
@@ -103,6 +113,7 @@ namespace MiniPirates.Gameplay.Screens
             boulder = ScreenManager.gameReference.Content.Load<Texture2D>("boulder");
             cannonOutline = ScreenManager.gameReference.Content.Load<Texture2D>("cannonOutline");
             cannonFilled = ScreenManager.gameReference.Content.Load<Texture2D>("cannonFilled");
+            animatedSpriteSheetTest = ScreenManager.gameReference.Content.Load<Texture2D>("sail_spritesheet_dark");
 
             pauseScreen.LoadContent();
             base.LoadContent();
